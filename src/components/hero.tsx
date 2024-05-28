@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { pageData } from "../data/data";
 import {
   ArrowRightProps,
@@ -14,16 +14,30 @@ const HeroSection = () => {
   const [currentInfo, setCurrentInfo] = useState(pageData[0]);
   const currentIndex = pageData.indexOf(currentInfo);
 
-  function next() {
+  const next = useCallback(() => {
     const nextIndex = (currentIndex + 1) % pageData.length;
     setCurrentInfo(pageData[nextIndex]);
-  }
+  }, [currentIndex]);
 
-  function previous() {
+  const previous = useCallback(() => {
     const previousIndex =
       (currentIndex - 1 + pageData.length) % pageData.length;
     setCurrentInfo(pageData[previousIndex]);
-  }
+  }, [currentIndex]);
+
+  useEffect(() => {
+    function keyboardHandler(event: KeyboardEvent) {
+      if (event.key === "ArrowRight") {
+        next();
+      } else if (event.key === "ArrowLeft") {
+        previous();
+      }
+    }
+
+    window.addEventListener("keydown", keyboardHandler);
+
+    return () => window.removeEventListener("keydown", keyboardHandler);
+  }, [next, previous]);
 
   return (
     <main className="flex flex-col lg:flex-row grow">

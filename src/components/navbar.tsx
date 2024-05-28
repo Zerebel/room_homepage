@@ -89,8 +89,10 @@ export const Navbar = () => {
         <li className="pt-1">
           <Logo />
         </li>
-        <li className="flex space-x-8 text-white">
-          <Menu />
+        <li className="">
+          <ul className="flex space-x-8 text-white">
+            <Menu />
+          </ul>
         </li>
       </ul>
     );
