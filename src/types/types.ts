@@ -1,4 +1,4 @@
-export interface Data {
+export interface PageInfo {
   image: string;
   desktopImage: string;
   title: string;
