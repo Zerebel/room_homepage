@@ -8,7 +8,7 @@ const Footer = () => {
 
   return (
     <footer>
-      <div className="flex flex-col lg:flex-row ">
+      <div className="flex flex-col lg:flex-row">
         <FooterImage image={FooterImageDark} />
         <div className="w-full px-12 py-8 flex flex-col justify-center gap-2">
           <p className="font-bold">ABOUT OUR FURNITURE</p>
