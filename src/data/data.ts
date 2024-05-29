@@ -1,4 +1,4 @@
-import { Data } from "../types/types";
+import { PageInfo } from "../types/types";
 import Image1 from "../assets/mobile-image-hero-1.jpg";
 import DesktopImage1 from "../assets/desktop-image-hero-1.jpg";
 import Image2 from "../assets/mobile-image-hero-2.jpg";
@@ -6,7 +6,7 @@ import DesktopImage2 from "../assets/desktop-image-hero-2.jpg";
 import Image3 from "../assets/mobile-image-hero-3.jpg";
 import DesktopImage3 from "../assets/desktop-image-hero-3.jpg";
 
-export const pageData: Data[] = [
+export const pageData: PageInfo[] = [
   {
     image: Image1,
     desktopImage: DesktopImage1,
