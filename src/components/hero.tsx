@@ -1,29 +1,32 @@
 import { useCallback, useEffect, useState } from "react";
-import { pageData } from "../data/data";
 import {
   ArrowRightProps,
-  Data,
   HeroImageProps,
+  PageInfo,
   SliderControlsProps,
 } from "../types/types";
-import { Navbar } from "./navbar";
 import AngleLeft from "../assets/icon-angle-left.svg";
 import AngleRight from "../assets/icon-angle-right.svg";
 
-const HeroSection = () => {
-  const [currentInfo, setCurrentInfo] = useState(pageData[0]);
-  const currentIndex = pageData.indexOf(currentInfo);
+const HeroSection = ({ info }: { info: PageInfo[] }) => {
+  if (info.length < 1) return null;
+
+  return <HeroInfo info={info} />;
+};
+
+function HeroInfo({ info }: { info: PageInfo[] }) {
+  const [currentInfo, setCurrentInfo] = useState(info[0]);
+  const currentIndex = info.indexOf(currentInfo);
 
   const next = useCallback(() => {
-    const nextIndex = (currentIndex + 1) % pageData.length;
-    setCurrentInfo(pageData[nextIndex]);
-  }, [currentIndex]);
+    const nextIndex = (currentIndex + 1) % info.length;
+    setCurrentInfo(info[nextIndex]);
+  }, [currentIndex, info]);
 
   const previous = useCallback(() => {
-    const previousIndex =
-      (currentIndex - 1 + pageData.length) % pageData.length;
-    setCurrentInfo(pageData[previousIndex]);
-  }, [currentIndex]);
+    const previousIndex = (currentIndex - 1 + info.length) % info.length;
+    setCurrentInfo(info[previousIndex]);
+  }, [currentIndex, info]);
 
   useEffect(() => {
     function keyboardHandler(event: KeyboardEvent) {
@@ -55,7 +58,7 @@ const HeroSection = () => {
       />
     </main>
   );
-};
+}
 
 function Controls({
   next,
@@ -67,20 +70,24 @@ function Controls({
   return (
     <div className="flex w-28 md:w-36">
       <button
-        title="previous"
+        title="Go to previous slide"
         type="button"
         className="bg-black w-full flex justify-center py-4 md:py-6 lg:py-8 hover:bg-very_dark_gray"
         onClick={previous}
+        aria-label="Go to previous slide"
+        data-testid="previous-button"
       >
-        <img src={AngleLeft} alt="previous" />
+        <img src={AngleLeft} alt="Go to previous slide" />
       </button>
       <button
-        title="next"
+        title="Go to next slide"
         type="button"
         className="bg-black w-full flex justify-center py-4 md:py-6 lg:py-8 hover:bg-very_dark_gray"
         onClick={next}
+        aria-label="Go to next slide"
+        data-testid="next-button"
       >
-        <img src={AngleRight} alt="next" />
+        <img src={AngleRight} alt="Go to next slide" />
       </button>
     </div>
   );
@@ -94,7 +101,6 @@ function HeroImage({
 }: HeroImageProps & SliderControlsProps) {
   return (
     <div className="flex flex-col relative basis-3/5">
-      <Navbar />
       <div className="w-full h-full bg-black">
         <picture>
           <source media="(min-width: 768px)" srcSet={desktopImage} />
@@ -113,7 +119,7 @@ function HeroContent({
   description,
   next,
   previous,
-}: Partial<Data> & SliderControlsProps) {
+}: Partial<PageInfo> & SliderControlsProps) {
   return (
     <div className="basis-2/5 flex flex-col">
       <div className="flex flex-col justify-center h-full text-black px-12 py-8 lg:py-0 gap-2 lg:gap-6">
@@ -147,8 +153,8 @@ const ArrowRight: React.FC<ArrowRightProps> = ({ color, ...props }) => {
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M39.5317 5.52782L34.0492 0L33.3869 0.667759L38.2072 5.52782H0V6.52782H38.152L33.3869 11.3322L34.0492 12L39.4765 6.52782H39.5392V6.46463L40 6L39.5392 5.53537V5.52782H39.5317Z"
           fill={color}
         />
